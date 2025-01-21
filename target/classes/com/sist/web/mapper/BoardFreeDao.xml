@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sist.web.dao.BoardFreeDao">
+
+	<!-- 일반회원 resultMap -->
+	<resultMap type="com.sist.web.model.User" id="userResultMap">
+		<id column="USER_ID" property="userId" />
+		<result column="USER_PWD" property="userPwd" />
+		<result column="USER_EMAIL" property="userEmail" />
+		<result column="USER_NAME" property="userName" />
+		<result column="USER_PHONE" property="userPhone" />
+		<result column="ADDR_CODE" property="addrCode" />
+		<result column="ADDR_BASE" property="addrBase" />
+		<result column="ADDR_DETAIL" property="addrDetail" />
+		<result column="STATUS" property="status" />
+		<result column="RATING" property="rating" />
+		<result column="REG_DATE" property="regDate" />
+		<result column="USER_PROFILE" property="userProfile" />
+	</resultMap>
+	
+	<!-- 강사 resultMap -->
+	<resultMap type="com.sist.web.model.Teacher" id="teacherResultMap">
+		<id column="USER_ID" property="userId" />
+		<result column="USER_PWD" property="userPwd" />
+		<result column="USER_EMAIL" property="userEmail" />
+		<result column="USER_NAME" property="userName" />
+		<result column="USER_PHONE" property="userPhone" />
+		<result column="ADDR_CODE" property="addrCode" />
+		<result column="ADDR_BASE" property="addrBase" />
+		<result column="ADDR_DETAIL" property="addrDetail" />
+		<result column="STATUS" property="status" />
+		<result column="RATING" property="rating" />
+		<result column="REG_DATE" property="regDate" />
+		<result column="USER_PROFILE" property="userProfile" />
+		<result column="USER_INTRO" property="userIntro" />
+		<result column="USER_DEGREE" property="userDegree" />
+		<result column="USER_CAREER" property="userCareer" />
+		<result column="CLASS_CODE" property="classCode" />
+	</resultMap>
+	
+	<!-- 보드 resultMap -->
+	<resultMap type="com.sist.web.model.Board" id="boardResultMap">
+		<id column="BRD_SEQ" property="brdSeq" />
+		<id column="USER_ID" property="userId" />
+		<result column="BRD_TITLE" property="brdTitle" />
+		<result column="BRD_CONTENT" property="brdContent" />
+		<result column="BRD_READ_CNT" property="brdReadCnt" />
+		<result column="REG_DATE" property="regDate" />
+		<result column="MOD_DATE" property="modDate" />
+		<result column="DEL_DATE" property="delDate" />
+		<result column="CATEGORY" property="category" />
+	</resultMap>
+	
+</mapper>
+	

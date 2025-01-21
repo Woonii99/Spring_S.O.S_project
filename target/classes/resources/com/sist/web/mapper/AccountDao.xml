@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sist.web.dao.AccountDao">
+	
+	<!-- 일반회원 resultMap -->
+	<resultMap type="com.sist.web.model.User" id="userResultMap">
+		<id column="USER_ID" property="userId" />
+		<result column="USER_PWD" property="userPwd" />
+		<result column="USER_EMAIL" property="userEmail" />
+		<result column="USER_NAME" property="userName" />
+		<result column="USER_PHONE" property="userPhone" />
+		<result column="ADDR_CODE" property="addrCode" />
+		<result column="ADDR_BASE" property="addrBase" />
+		<result column="ADDR_DETAIL" property="addrDetail" />
+		<result column="STATUS" property="status" />
+		<result column="RATING" property="rating" />
+		<result column="REG_DATE" property="regDate" />
+		<result column="USER_PROFILE" property="userProfile" />
+	</resultMap>
+	
+	<!-- 강사 resultMap -->
+	<resultMap type="com.sist.web.model.Teacher" id="teacherResultMap">
+		<id column="USER_ID" property="userId" />
+		<result column="USER_PWD" property="userPwd" />
+		<result column="USER_EMAIL" property="userEmail" />
+		<result column="USER_NAME" property="userName" />
+		<result column="USER_PHONE" property="userPhone" />
+		<result column="ADDR_CODE" property="addrCode" />
+		<result column="ADDR_BASE" property="addrBase" />
+		<result column="ADDR_DETAIL" property="addrDetail" />
+		<result column="STATUS" property="status" />
+		<result column="RATING" property="rating" />
+		<result column="REG_DATE" property="regDate" />
+		<result column="USER_PROFILE" property="userProfile" />
+		<result column="USER_INTRO" property="userIntro" />
+		<result column="USER_DEGREE" property="userDegree" />
+		<result column="USER_CAREER" property="userCareer" />
+		<result column="CLASS_CODE" property="classCode" />
+	</resultMap>
+	
+	<!-- 관리자 resultMap -->
+	<!--<resultMap type="com.sist.web.medel.Admin" id="adminResultMap">
+		<id column="USER_ID" property="userId" />
+		<result column="USER_PWD" property="userPwd" />
+		<result column="USER_EMAIL" property="userEmail" />
+		<result column="USER_NAME" property="userName" />
+		<result column="USER_PHONE" property="userPhone" />
+		<result column="RATING" property="rating" />
+		<result column="REG_DATE" property="regDate" />
+		<result column="USER_PROFILE" property="userProfile" />
+	</resultMap> -->
+	
+	<!-- 일반 회원 선택 -->
+	<select id="userSelect" parameterType="String" resultMap="userResultMap">
+		SELECT USER_ID,
+			   NVL(USER_PWD, '') USER_PWD,
+			   NVL(USER_EMAIL, '') USER_EMAIL, 
+			   NVL(USER_NAME, '') USER_NAME, 
+			   NVL(USER_PHONE, '') USER_PHONE, 
+			   NVL(ADDR_CODE, '') ADDR_CODE, 
+			   NVL(ADDR_BASE, '') ADDR_BASE, 
+			   NVL(ADDR_DETAIL, '') ADDR_DETAIL, 
+			   NVL(STATUS, 'N') STATUS, 
+			   NVL(RATING, '') RATING, 
+			   NVL(REG_DATE, '') REG_DATE, 
+			   NVL(USER_PROFILE, '') USER_PROFILE 
+		  FROM EDU_USER
+		 WHERE USER_ID = #{value}
+	</select>
+	<!-- 강사 회원 선택 -->
+	<select id="teacherSelect" parameterType="String" resultMap="teacherResultMap">
+		SELECT USER_ID,
+			   NVL(USER_PWD, '') USER_PWD, 
+			   NVL(USER_EMAIL, '') USER_EMAIL, 
+			   NVL(USER_NAME, '') USER_NAME, 
+			   NVL(USER_PHONE, '') USER_PHONE, 
+			   NVL(ADDR_CODE, '') ADDR_CODE, 
+			   NVL(ADDR_BASE, '') ADDR_BASE, 
+			   NVL(ADDR_DETAIL, '') ADDR_DETAIL, 
+			   NVL(STATUS, 'N') STATUS, 
+			   NVL(RATING, '') RATING, 
+			   NVL(TO_CHAR(REG_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') REG_DATE, 
+			   NVL(USER_PROFILE, '') USER_PROFILE, 
+			   NVL(USER_INTRO, '') USER_INTRO, 
+			   NVL(USER_DEGREE, '') USER_DEGREE, 
+			   NVL(USER_CAREER, '') USER_CAREER, 
+			   NVL(CLASS_CODE, '') CLASS_CODE
+		  FROM EDU_TEACHER
+		 WHERE USER_ID = #{value}			   
+	</select>
+	
+	<!-- 관리자 회원 선택 -->
+	<!-- <select id="adminSelect" parameterType="String" resultMap="adminResultMap">
+		SELECT USER_ID,
+			   NVL(USER_PWD, '') USER_PWD, 
+			   NVL(USER_EMAIL, '') USER_EMAIL, 
+			   NVL(USER_NAME, '') USER_NAME, 
+			   NVL(USER_PHONE, '') USER_PHONE,
+			   NVL(RATING, '') RATING, 
+			   NVL(TO_CHAR(REG_DATE, 'YYYY.MM.DD HH24:MI:SS'), '') REG_DATE, 
+			   NVL(USER_PROFILE, '') USER_PROFILE 
+		  FROM EDU_ADMIN
+		 WHERE USER_ID = #{value}
+	</select> -->
+
+	<select id="userIdSearch" parameterType="String" resultType="String">
+		SELECT USER_ID
+		  FROM EDU_USER
+		 WHERE USER_NAME = #{1}
+		   AND USER_EMAIL = #{2}
+		   AND USER_PHONE = #{3}
+	</select>
+	<select id="teacherIdSearch" parameterType="String" resultType="String">
+		SELECT USER_ID
+		  FROM EDU_TEACHER
+		 WHERE USER_NAME = #{1}
+		   AND USER_EMAIL = #{2}
+		   AND USER_PHONE = #{3}
+	</select>
+	
+	<select id="userEmailCheck" parameterType="String" resultType="int">
+		SELECT COUNT(USER_ID)
+		  FROM EDU_USER
+		 WHERE USER_EMAIL = #{value}
+	</select>
+	
+	<select id="teacherEmailCheck" parameterType="String" resultType="int">
+		SELECT COUNT(USER_ID)
+		  FROM EDU_TEACHER
+		 WHERE USER_EMAIL = #{value}
+	</select>
+
+	<insert id="userInsert" parameterType="com.sist.web.model.User">
+		INSERT INTO EDU_USER ( 
+			   USER_ID, 
+			   USER_PWD, 
+			   USER_EMAIL, 
+			   USER_NAME, 
+			   USER_PHONE, 
+			   ADDR_CODE, 
+			   ADDR_BASE, 
+			   ADDR_DETAIL, 
+			   STATUS, 
+			   RATING, 
+			   REG_DATE 
+		) 
+		VALUES( 
+			   #{userId}, 
+			   #{userPwd}, 
+			   #{userEmail}, 
+			   #{userName}, 
+			   #{userPhone}, 
+			   #{addrCode}, 
+			   #{addrBase}, 
+			   #{addrDetail}, 
+			   'Y', 
+			   #{rating}, 
+			   SYSDATE 			   
+		)
+	</insert>
+
+	<insert id="teacherInsert" parameterType="com.sist.web.model.Teacher">
+		INSERT INTO EDU_TEACHER ( 
+			   USER_ID, 
+			   USER_PWD, 
+			   USER_EMAIL, 
+			   USER_NAME, 
+			   USER_PHONE, 
+			   ADDR_CODE, 
+			   ADDR_BASE, 
+			   ADDR_DETAIL, 
+			   STATUS, 
+			   RATING, 
+			   REG_DATE 
+		) 
+		VALUES( 
+			   #{userId}, 
+			   #{userPwd}, 
+			   #{userEmail}, 
+			   #{userName}, 
+			   #{userPhone}, 
+			   #{addrCode}, 
+			   #{addrBase}, 
+			   #{addrDetail}, 
+			   'N', 
+			   #{rating}, 
+			   SYSDATE 			   
+		)
+	</insert>
+
+	<!-- 일반 유저 비밀번호 변경 -->
+	<update id="userPwdChange" parameterType="String">
+		UPDATE EDU_USER
+		   SET USER_PWD = #{userPwd}
+		 WHERE USER_ID = #{userId}
+	</update>
+	<update id="teacherPwdChange" parameterType="String">
+		UPDATE EDU_TEACHER
+		   SET USER_PWD = #{userPwd}
+		 WHERE USER_ID = #{userId}
+	</update>
+	
+	<!-- 유저 status 변경 -->
+	<update id="userStatusUpdate" parameterType="String">
+		UPDATE EDU_USER
+		   SET STATUS = #{status}
+		 WHERE USER_ID = #{userId}
+	</update>
+	<update id="teacherStatusUpdate" parameterType="String">
+		UPDATE EDU_TEACHER
+		   SET STATUS = #{status}
+		 WHERE USER_ID = #{userId}
+	</update>
+
+
+
+
+
+
+
+
+
+
+</mapper>
